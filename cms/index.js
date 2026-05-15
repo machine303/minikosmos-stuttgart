@@ -478,8 +478,8 @@ const CSS = `
   .badge-past{background:#2a2a1a;color:#aaa}
 
   /* Section jump — collapsible */
-  .section{padding-top:20px}
-  .section-divider{height:1px;background:var(--border);margin:32px 0}
+  .section{padding-top:6px}
+  .section-divider{height:1px;background:var(--border);margin:8px 0}
   .section-toggle{cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
   .section-toggle::after{content:'▾';font-size:1.2rem;color:var(--muted);transition:transform .2s}
   .section.collapsed .section-toggle::after{transform:rotate(-90deg)}
