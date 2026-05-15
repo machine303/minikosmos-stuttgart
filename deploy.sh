@@ -18,6 +18,7 @@ echo "▶ Dateien auf VPS synchronisieren …"
 PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 rsync -az --delete \
   --exclude 'node_modules' \
+  --exclude 'data' \
   --exclude 'cms/data' \
   --exclude '.env' \
   --exclude 'deploy.sh' \
