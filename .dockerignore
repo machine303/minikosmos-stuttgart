@@ -1,0 +1,8 @@
+.git
+docs/
+node_modules/
+cms/data/
+cms/node_modules/
+*.pdf
+.DS_Store
+.claude/

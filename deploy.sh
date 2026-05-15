@@ -18,12 +18,19 @@ ssh "$REMOTE" "echo '  ✓ SSH OK'" || { echo "✗ SSH fehlgeschlagen"; exit 1; 
 
 echo ""
 echo "▶ Dateien auf VPS synchronisieren …"
+PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 rsync -az --delete \
   --exclude 'node_modules' \
-  --exclude 'data' \
+  --exclude 'cms/data' \
   --exclude '.env' \
   --exclude 'deploy.sh' \
-  "$(dirname "$0")/" \
+  --exclude 'docs' \
+  --exclude '.git' \
+  --exclude '.claude' \
+  --exclude '.DS_Store' \
+  --exclude '*.pdf' \
+  --exclude '*.md' \
+  "$PROJECT_ROOT/" \
   "$REMOTE:$SERVICE_DIR/"
 echo "  ✓ Sync abgeschlossen"
 

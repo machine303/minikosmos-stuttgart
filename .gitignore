@@ -5,7 +5,10 @@
 node_modules/
 
 # Database & uploads (persistent data, not in repo)
-07_CMS/data/
+cms/data/
+
+# Symlink for local dev (website/ served from cms/)
+cms/website
 
 # Environment
 .env
