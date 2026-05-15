@@ -5,9 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mini-Kosmos Stuttgart — Begegnung neu denken</title>
   <meta name="description" content="Mini-Kosmos Stuttgart ist eine gemeinnützige Initiative für generationenübergreifenden Dialog. Echte Begegnungen, mitten in Stuttgart.">
-  <meta property="og:title" content="Mini-Kosmos Stuttgart">
-  <meta property="og:description" content="Begegnung neu denken. Gemeinsam erleben & wachsen.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://minikosmos.marrazzo.digital/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mini-Kosmos Stuttgart — Begegnung neu denken">
+  <meta property="og:description" content="Gemeinnützige Initiative für generationenübergreifenden Dialog. Echte Begegnungen, mitten in Stuttgart.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://minikosmos.marrazzo.digital/">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Mini-Kosmos Stuttgart">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mini-Kosmos Stuttgart — Begegnung neu denken">
+  <meta name="twitter:description" content="Gemeinnützige Initiative für generationenübergreifenden Dialog. Echte Begegnungen, mitten in Stuttgart.">
 
   <!-- CI-Fonts: Barlow Condensed (wie IG-Posts) + Inter (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,8 +27,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
+
+<!-- Skip-Navigation (Screenreader / Tastatur) -->
+<a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
 <!-- Gradient-Linie oben (CI-Signatur) -->
 <div class="grad-bar"></div>
@@ -44,6 +60,7 @@
   </div>
 </nav>
 
+<main id="main-content">
 
 <!-- ============================================================ -->
 <!-- HERO — Signature-Gradient wie MINI KOSMOS STUTTGART Post     -->
@@ -53,13 +70,13 @@
 
   <div class="hero-content">
 
-    <div class="hero-badge">
+    <div class="hero-badge" data-key="hero_badge">
       ✦ Gemeinnützige Initiative · Stuttgart
     </div>
 
-    <h1>Begegnung<br>neu denken.</h1>
+    <h1 data-html="hero_headline">Begegnung<br>neu denken.</h1>
 
-    <p class="hero-sub">
+    <p class="hero-sub" data-html="hero_subline">
       Mini-Kosmos bringt Menschen zusammen, die sich sonst vielleicht nie begegnet wären —
       generationenübergreifend, offen und herzlich. Mitten in Stuttgart.
     </p>
@@ -71,16 +88,16 @@
 
     <div class="hero-stats">
       <div>
-        <div class="stat-n">3×</div>
-        <div class="stat-l">Bingo-Events</div>
+        <div class="stat-n" data-key="stats_events_count">3×</div>
+        <div class="stat-l" data-key="stats_events_label">Bingo-Events</div>
       </div>
       <div>
-        <div class="stat-n">100+</div>
-        <div class="stat-l">Teilnehmende</div>
+        <div class="stat-n" data-key="stats_participants">100+</div>
+        <div class="stat-l" data-key="stats_participants_label">Teilnehmende</div>
       </div>
       <div>
-        <div class="stat-n">18</div>
-        <div class="stat-l">Partner & Förderer</div>
+        <div class="stat-n" data-key="stats_partner_count">18</div>
+        <div class="stat-l" data-key="stats_partner_label">Partner & Förderer</div>
       </div>
     </div>
 
@@ -96,10 +113,10 @@
 
     <div class="intro-block">
       <div>
-        <span class="kicker">Was wir tun</span>
-        <h2>Ein kleines<br>Universum.<br>Mitten in Stuttgart.</h2>
+        <span class="kicker" data-key="mission_kicker">Was wir tun</span>
+        <h2 data-html="mission_headline">Ein kleines<br>Universum.<br>Mitten in Stuttgart.</h2>
       </div>
-      <p class="lead-text">
+      <p class="lead-text" data-html="mission_text">
         Oft leben wir in der Stadt nebeneinanderher. Ältere Menschen hüten einen Schatz
         an Geschichten und Fähigkeiten — während im Alltag oft die Zeit für entschleunigte
         Begegnungen fehlt. Wenn wir Menschen begegnen, die eine andere Lebensrealität
@@ -114,19 +131,19 @@
 
     <div class="values-grid">
       <div class="value-card v1">
-        <span class="val-emoji">✨</span>
-        <h3>Begegnung</h3>
-        <p>Wir schaffen Räume, in denen echte Verbindungen entstehen — ohne Agenda, ohne Druck. Einfach Mensch zu Mensch.</p>
+        <span class="val-emoji" data-key="value1_emoji">✨</span>
+        <h3 data-key="value1_title">Begegnung</h3>
+        <p data-key="value1_text">Wir schaffen Räume, in denen echte Verbindungen entstehen — ohne Agenda, ohne Druck. Einfach Mensch zu Mensch.</p>
       </div>
       <div class="value-card v2">
-        <span class="val-emoji">🌱</span>
-        <h3>Dialog</h3>
-        <p>Verschiedene Perspektiven, eine Gesprächsrunde. Jung trifft Alt, Erfahrung trifft Neugier — gegenseitiger Respekt als Grundlage.</p>
+        <span class="val-emoji" data-key="value2_emoji">🌱</span>
+        <h3 data-key="value2_title">Dialog</h3>
+        <p data-key="value2_text">Verschiedene Perspektiven, eine Gesprächsrunde. Jung trifft Alt, Erfahrung trifft Neugier — gegenseitiger Respekt als Grundlage.</p>
       </div>
       <div class="value-card v3">
-        <span class="val-emoji">🌍</span>
-        <h3>Wachstum</h3>
-        <p>Wer Teil von Mini-Kosmos wird, bringt sich ein — und nimmt etwas mit. Gemeinsam werden wir mehr.</p>
+        <span class="val-emoji" data-key="value3_emoji">🌍</span>
+        <h3 data-key="value3_title">Wachstum</h3>
+        <p data-key="value3_text">Wer Teil von Mini-Kosmos wird, bringt sich ein — und nimmt etwas mit. Gemeinsam werden wir mehr.</p>
       </div>
     </div>
 
@@ -141,13 +158,13 @@
   <div class="container">
 
     <div class="team-text">
-      <span class="kicker team-label">Wer dahinter steckt</span>
-      <h2>Hallo, wir sind<br>Melli &amp; Kathi 👋</h2>
-      <p>
+      <span class="kicker team-label" data-key="team_kicker">Wer dahinter steckt</span>
+      <h2 data-html="team_headline">Hallo, wir sind<br>Melli &amp; Kathi 👋</h2>
+      <p data-key="team_intro_1">
         Wir sind die Mini-Kosmonautinnen — nach 10 Jahren Freundschaft und unterschiedlichen
         Lebenswegen führen wir unsere Erfahrungen jetzt im Mini-Kosmos Stuttgart zusammen.
       </p>
-      <p>
+      <p data-key="team_intro_2">
         Was wir machen? Räume und Events für echte Begegnung schaffen und Transformation
         in Stuttgart mitgestalten. Ob als Supporter, Event-Host, helfende Hand oder
         einfach Neugierige — meldet euch. Wir antworten immer. 🚀
@@ -177,7 +194,7 @@
     <h2>Das nächste Event<br>wartet auf dich.</h2>
     <p>Kein Eintritt. Keine Voranmeldung. Einfach kommen.</p>
 
-    <div class="event-card">
+    <div id="event-container"><div class="event-card">
       <div class="event-info">
         <span class="event-vol">Vol. 3 · 2026</span>
         <div class="event-title">Bingo Nachmittag</div>
@@ -210,7 +227,7 @@
         <div class="ep-title">Bingo<br>Nachmittag</div>
         <div class="ep-date">09. Mai 2026<br>14:00 Uhr<br>StadtPalais<br>Eintritt frei</div>
       </div>
-    </div>
+    </div></div>
 
   </div>
 </section>
@@ -229,7 +246,7 @@
       glauben, sondern sie aktiv mitgestalten.
     </p>
 
-    <div class="partner-grid">
+    <div id="partner-grid" class="partner-grid">
       <a href="https://www.stuttgart.de/" target="_blank" rel="noopener" class="partner-chip">Landeshauptstadt Stuttgart</a>
       <a href="https://www.stadtpalais-stuttgart.de/" target="_blank" rel="noopener" class="partner-chip">StadtPalais Stuttgart</a>
       <a href="https://www.imwizemann.de/" target="_blank" rel="noopener" class="partner-chip">Im Wizemann</a>
@@ -270,10 +287,10 @@
     <p>Neue Events, Einblicke hinter die Kulissen und Menschen aus unserem Kosmos.</p>
 
     <div class="feed-grid">
-      <div class="feed-tile feed-tile-1"><div class="feed-tile-inner">Bingo<br>Vol. 3</div></div>
-      <div class="feed-tile feed-tile-2"><div class="feed-tile-inner">Mini<br>Kosmos</div></div>
-      <div class="feed-tile feed-tile-3"><div class="feed-tile-inner">Neue<br>Sterne</div></div>
-      <div class="feed-tile feed-tile-4"><div class="feed-tile-inner">Danke<br>💛</div></div>
+      <div class="feed-tile feed-tile-1"><div class="feed-tile-inner" id="insta-tile1">Bingo<br>Vol. 3</div></div>
+      <div class="feed-tile feed-tile-2"><div class="feed-tile-inner" data-key="insta_tile2">Mini<br>Kosmos</div></div>
+      <div class="feed-tile feed-tile-3"><div class="feed-tile-inner" data-key="insta_tile3">Neue<br>Sterne</div></div>
+      <div class="feed-tile feed-tile-4"><div class="feed-tile-inner" data-key="insta_tile4">Danke<br>💛</div></div>
     </div>
 
     <a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener" class="btn-insta">
@@ -303,7 +320,7 @@
 
       <div class="contact-links">
 
-        <a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener" class="contact-link">
+        <a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener" class="contact-link" data-href="contact_instagram">
           <div class="c-icon purple">📸</div>
           <div>
             <div class="c-label">Instagram</div>
@@ -311,15 +328,15 @@
           </div>
         </a>
 
-        <a href="mailto:minikosmos.stuttgart@gmail.com" class="contact-link">
+        <a href="mailto:minikosmos.stuttgart@gmail.com" data-href="contact_email" data-hreftype="mailto" class="contact-link">
           <div class="c-icon">✉️</div>
           <div>
             <div class="c-label">E-Mail</div>
-            <div class="c-value">minikosmos.stuttgart@gmail.com</div>
+            <div class="c-value" data-key="contact_email">minikosmos.stuttgart@gmail.com</div>
           </div>
         </a>
 
-        <a href="https://linktr.ee/minikosmos.stuttgart" target="_blank" rel="noopener" class="contact-link">
+        <a href="https://linktr.ee/minikosmos.stuttgart" target="_blank" rel="noopener" class="contact-link" data-href="contact_linktree">
           <div class="c-icon mint">🔗</div>
           <div>
             <div class="c-label">Alle Links</div>
@@ -343,18 +360,126 @@
 <!-- ============================================================ -->
 <!-- FOOTER                                                        -->
 <!-- ============================================================ -->
+</main>
+
 <div class="footer-grad-line"></div>
 <footer>
   <div class="footer-inner">
     <span class="footer-logo">Mini-Kosmos Stuttgart</span>
+    <button class="footer-bug-btn" id="footer-bug-btn" title="Feedback &amp; Änderungswunsch melden" aria-label="Feedback melden">
+      <svg class="lucide lucide-bug" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/>
+        <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/>
+        <path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/>
+        <path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/>
+        <path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/>
+        <path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/>
+        <path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/>
+      </svg>
+    </button>
     <span>© 2026 · Eine Initiative von Melli &amp; Kathi</span>
     <span>
       <a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener">@minikosmos.stuttgart</a>
       &nbsp;·&nbsp;
-      <a href="#">Impressum</a>
+      <a href="/impressum">Impressum</a>
     </span>
   </div>
 </footer>
+
+<script>
+// ── CMS Content Loader ──────────────────────────────────────────────────────
+(function () {
+  fetch('/api/content').then(function (r) { return r.json(); }).then(function (data) {
+    var s = data.settings || {};
+    var events = data.events || [];
+    var partners = data.partners || [];
+
+    // Simple text swaps (plain text)
+    document.querySelectorAll('[data-key]').forEach(function (el) {
+      var v = s[el.dataset.key];
+      if (v) el.textContent = v;
+    });
+
+    // HTML swaps (supports markup + converts newlines to <br>)
+    document.querySelectorAll('[data-html]').forEach(function (el) {
+      var v = s[el.dataset.html];
+      if (v) el.innerHTML = v.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+    });
+
+    // Mailto/href swaps
+    document.querySelectorAll('[data-href]').forEach(function (el) {
+      var key = el.dataset.href;
+      var v = s[key];
+      if (!v) return;
+      el.href = (el.dataset.hreftype === 'mailto' ? 'mailto:' : '') + v;
+    });
+
+    // Partner grid — re-render from API
+    var pg = document.getElementById('partner-grid');
+    if (pg && partners.length) {
+      pg.innerHTML = partners.map(function (p) {
+        var url = p.website || '#';
+        var target = p.website ? ' target="_blank" rel="noopener"' : '';
+        return '<a href="' + url + '"' + target + ' class="partner-chip">' + p.name + '</a>';
+      }).join('');
+    }
+
+    // Instagram tile 1 — show next upcoming event title
+    var t1 = document.getElementById('insta-tile1');
+    if (t1 && events.length) {
+      var nextEv = events.find(function(e){ return e.status === 'upcoming'; }) || events[0];
+      if (nextEv) {
+        var titleParts = nextEv.title.split(' ');
+        // Try to break at a sensible point (e.g. "Bingo Nachmittag" → "Bingo<br>Nachmittag")
+        var mid = Math.ceil(titleParts.length / 2);
+        t1.innerHTML = titleParts.slice(0, mid).join(' ') + '<br>' + titleParts.slice(mid).join(' ');
+      }
+    }
+
+    // Event cards — show all upcoming events
+    var ec = document.getElementById('event-container');
+    if (ec && events.length) {
+      var upcoming = events.filter(function (e) { return e.status === 'upcoming'; });
+      if (!upcoming.length) upcoming = [events[0]];
+
+      // Dynamic section header
+      var kicker = document.querySelector('#events .kicker');
+      var heading = document.querySelector('#events h2');
+      if (upcoming.length > 1) {
+        if (kicker) kicker.textContent = 'Kommende Events';
+        if (heading) heading.innerHTML = 'Unsere nächsten Events<br>warten auf dich.';
+      }
+
+      ec.innerHTML = upcoming.map(function (ev) {
+        var tags = ev.tags
+          ? ev.tags.split(',').map(function (t) {
+              return '<span class="event-chip">' + t.trim() + '</span>';
+            }).join('')
+          : '';
+        return '<div class="event-card">'
+          + '<div class="event-info">'
+          + '<span class="event-vol">Vol. ' + ev.vol + ' · 2026</span>'
+          + '<div class="event-title">' + ev.title + '</div>'
+          + '<div class="event-meta">'
+          + (ev.date     ? '<div class="event-meta-item"><span>📅</span> ' + ev.date     + '</div>' : '')
+          + (ev.time     ? '<div class="event-meta-item"><span>🕑</span> ' + ev.time     + ' Uhr</div>' : '')
+          + (ev.location ? '<div class="event-meta-item"><span>📍</span> ' + ev.location + '</div>' : '')
+          + '</div>'
+          + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">' + tags + '</div>'
+          + (ev.description ? '<p style="color:rgba(255,255,255,0.8);max-width:480px;margin-bottom:32px;">' + ev.description + '</p>' : '')
+          + '<a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener" class="btn btn-white">Auf Instagram folgen →</a>'
+          + '</div>'
+          + '<div class="event-poster">'
+          + '<div class="ep-label">Mini-Kosmos Stuttgart</div>'
+          + '<div class="ep-title">' + ev.title + '</div>'
+          + '<div class="ep-date">' + (ev.date || '') + (ev.time ? '<br>' + ev.time + ' Uhr' : '') + (ev.location ? '<br>' + ev.location : '') + '<br>Eintritt frei</div>'
+          + '</div>'
+          + '</div>';
+      }).join('');
+    }
+  }).catch(function () { /* fail silently — static HTML stays as fallback */ });
+}());
+</script>
 
 <script>
   // Active nav highlight on scroll
@@ -370,6 +495,15 @@
     });
   }, { threshold: 0.45 });
   sections.forEach(s => obs.observe(s));
+</script>
+
+<script src="https://bugs.marrazzo.digital/widget.js"
+  data-project="minikosmos"
+  data-api-key="a76e6f44cbdb209f411260b41de356cda55e63d80de1349d"
+  data-position="bottom-left"
+  data-color="#f59e0b"
+  data-types="bug,ux,wunsch"
+  data-trigger-id="footer-bug-btn">
 </script>
 
 </body>
