@@ -998,6 +998,8 @@ footer a:hover { color: var(--gold); }
   /* Events */
   .event-card { grid-template-columns: 1fr; }
   .event-poster { margin: 0 auto; max-width: 160px; }
+  .flyer-thumb { max-width: 200px; }
+  .flyer-modal-content { width: 95vw; }
 
   /* Kontakt */
   #kontakt .container { grid-template-columns: 1fr; gap: 40px; }
@@ -1009,6 +1011,181 @@ footer a:hover { color: var(--gold); }
 
   /* Feed grid */
   .feed-grid { max-width: 280px; grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── Kompakte Event-Karten (weitere Events) ──────────────────────────── */
+
+.more-events-toggle {
+  text-align: center;
+  margin-top: 24px;
+  cursor: pointer;
+  padding: 14px 24px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.9);
+  transition: background 0.2s;
+}
+.more-events-toggle:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.more-events {
+  display: none;
+  margin-top: 16px;
+}
+.more-events.expanded {
+  display: block;
+}
+
+.event-compact {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.event-compact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.event-compact-header:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.event-compact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.event-compact-info strong {
+  font-size: 1rem;
+  color: var(--white);
+}
+.event-compact-meta {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.event-compact-arrow {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.6);
+  transition: transform 0.2s;
+}
+.event-compact.open .event-compact-arrow {
+  transform: rotate(180deg);
+}
+
+.event-compact-body {
+  display: none;
+  padding: 0 20px 20px;
+}
+.event-compact.open .event-compact-body {
+  display: block;
+}
+
+/* ── Flyer Modal ─────────────────────────────────────────────────────── */
+
+.flyer-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+.flyer-modal.active {
+  display: flex;
+}
+
+.flyer-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+}
+
+.flyer-modal-content {
+  position: relative;
+  max-width: 480px;
+  width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.flyer-modal-content img {
+  max-width: 100%;
+  max-height: 75vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  object-fit: contain;
+}
+
+.flyer-modal-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: transform 0.15s;
+}
+.flyer-modal-close:hover {
+  transform: scale(1.1);
+}
+
+.flyer-share {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 99px;
+  padding: 8px 20px;
+  color: rgba(255,255,255,0.9);
+}
+.flyer-share a,
+.flyer-share button {
+  font-size: 1.3rem;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.15s;
+  color: inherit;
+}
+.flyer-share a:hover,
+.flyer-share button:hover {
+  transform: scale(1.2);
+}
+
+/* Flyer thumb in event poster area */
+.flyer-thumb {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.flyer-thumb:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 
 /* ── Barrierefreiheit ───────────────────────────────────────────────────── */
