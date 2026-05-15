@@ -180,7 +180,7 @@ const upload = multer({
   dest:    UPLOADS_DIR,
   limits:  { fileSize: 8 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
-    cb(null, file.mimetype.startsWith('image/'));
+    cb(null, file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf');
   },
 });
 
@@ -362,20 +362,21 @@ app.post('/admin/upload/:slot', requireAdmin, upload.single('image'), (req, res)
   const destPath = path.join(UPLOADS_DIR, filename);
   fs.renameSync(req.file.path, destPath);
 
-  const keyMap = { 'team-melli': 'image_team_melli', 'team-kathi': 'image_team_kathi' };
+  const keyMap = { 'team-melli': 'image_team_melli', 'team-kathi': 'image_team_kathi', 'flyer': 'image_flyer' };
   const key    = keyMap[req.params.slot];
   if (key) {
     db.prepare('INSERT OR REPLACE INTO settings (key,value,label,type) VALUES (?,?,?,?)')
       .run(key, `/uploads/${filename}`, `Bild: ${req.params.slot}`, 'image');
   }
-  res.redirect('/admin?saved=1#team');
+  const anchor = req.params.slot === 'flyer' ? '#flyer' : '#team';
+  res.redirect('/admin?saved=1' + anchor);
 });
 
 // ─────────────────────────────────────────────
 // ADMIN — IMAGE DELETE
 // ─────────────────────────────────────────────
 app.post('/admin/upload/:slot/delete', requireAdmin, (req, res) => {
-  const keyMap = { 'team-melli': 'image_team_melli', 'team-kathi': 'image_team_kathi' };
+  const keyMap = { 'team-melli': 'image_team_melli', 'team-kathi': 'image_team_kathi', 'flyer': 'image_flyer' };
   const key = keyMap[req.params.slot];
   if (key) {
     const row = db.prepare('SELECT value FROM settings WHERE key = ?').get(key);
@@ -387,7 +388,8 @@ app.post('/admin/upload/:slot/delete', requireAdmin, (req, res) => {
     }
     db.prepare('UPDATE settings SET value = ? WHERE key = ?').run('', key);
   }
-  res.redirect('/admin?saved=1#team');
+  const delAnchor = req.params.slot === 'flyer' ? '#flyer' : '#team';
+  res.redirect('/admin?saved=1' + delAnchor);
 });
 
 // ─────────────────────────────────────────────
@@ -475,9 +477,13 @@ const CSS = `
   .badge-upcoming{background:#1a3a2a;color:var(--success)}
   .badge-past{background:#2a2a1a;color:#aaa}
 
-  /* Section jump */
+  /* Section jump — collapsible */
   .section{padding-top:20px}
   .section-divider{height:1px;background:var(--border);margin:32px 0}
+  .section-toggle{cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+  .section-toggle::after{content:'▾';font-size:1.2rem;color:var(--muted);transition:transform .2s}
+  .section.collapsed .section-toggle::after{transform:rotate(-90deg)}
+  .section.collapsed .section-body{display:none}
 
   /* Grid 2-col */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -630,6 +636,7 @@ ${saved ? '<div class="toast">✓ Gespeichert</div>' : ''}
       <a class="nav-link" href="#mission"><span class="icon">💫</span>Mission</a>
       <a class="nav-link" href="#team"><span class="icon">👩‍🚀</span>Team</a>
       <a class="nav-link" href="#events"><span class="icon">📅</span>Events</a>
+      <a class="nav-link" href="#flyer"><span class="icon">📄</span>Flyer</a>
       <a class="nav-link" href="#partner"><span class="icon">🌟</span>Partner</a>
       <a class="nav-link" href="#instagram"><span class="icon">📸</span>Instagram</a>
       <a class="nav-link" href="#kontakt"><span class="icon">💌</span>Kontakt</a>
@@ -839,6 +846,29 @@ ${saved ? '<div class="toast">✓ Gespeichert</div>' : ''}
 
     <div class="section-divider"></div>
 
+    <!-- ── FLYER ──────────────────────────────── -->
+    <div id="flyer" class="section">
+      <h2>📄 Flyer</h2>
+      <p class="hint">→ Lade einen Flyer hoch (Bild, DIN hoch). Wird auf der Website als kleine Vorschau angezeigt — Klick öffnet die Großansicht mit Teilen-Funktion.</p>
+      <div class="card">
+        <div class="upload-zone">
+          ${s['image_flyer']
+            ? '<img src="' + esc(s['image_flyer']) + '" alt="Flyer" style="max-width:180px;max-height:260px;border-radius:8px;object-fit:contain;margin-inline:auto">'
+            : '<p style="color:var(--muted);font-size:.85rem">📄 Noch kein Flyer hochgeladen</p>'}
+        </div>
+        <form method="post" action="/admin/upload/flyer" enctype="multipart/form-data" style="margin-top:12px">
+          <input type="file" name="image" accept="image/*" style="font-size:.8rem;color:var(--muted);width:100%;margin-bottom:8px">
+          <div style="display:flex;gap:8px">
+            <button type="submit" class="btn btn-ghost btn-sm" style="flex:1">Hochladen</button>
+            ${s['image_flyer'] ? '<button type="submit" form="del-img-flyer" class="btn btn-danger btn-sm" onclick="return confirm(\'Flyer löschen?\')">🗑</button>' : ''}
+          </div>
+        </form>
+        <form id="del-img-flyer" method="post" action="/admin/upload/flyer/delete"></form>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
     <!-- ── PARTNER ─────────────────────────────── -->
     <div id="partner" class="section">
       <h2>🌟 Partner & Sponsoren</h2>
@@ -950,8 +980,59 @@ ${saved ? '<div class="toast">✓ Gespeichert</div>' : ''}
   const toast = document.querySelector('.toast');
   if (toast) setTimeout(() => { toast.style.transition='opacity .5s'; toast.style.opacity='0'; }, 3000);
 
+  // ── Collapsible Sections ──
+  document.querySelectorAll('.section').forEach(sec => {
+    const h2 = sec.querySelector('h2');
+    if (!h2) return;
+    // Wrap h2 as toggle
+    const toggle = document.createElement('div');
+    toggle.className = 'section-toggle';
+    h2.parentNode.insertBefore(toggle, h2);
+    toggle.appendChild(h2);
+    // Wrap rest as body
+    const body = document.createElement('div');
+    body.className = 'section-body';
+    while (toggle.nextSibling) body.appendChild(toggle.nextSibling);
+    sec.appendChild(body);
+    // Start collapsed
+    sec.classList.add('collapsed');
+    // Toggle on click
+    toggle.addEventListener('click', () => sec.classList.toggle('collapsed'));
+  });
+
+  // ── Sidebar nav: click opens section ──
+  document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const id = link.getAttribute('href').slice(1);
+      const sec = document.getElementById(id);
+      if (sec && sec.classList.contains('section')) {
+        e.preventDefault();
+        // Collapse all others, open this one
+        document.querySelectorAll('.section').forEach(s => s.classList.add('collapsed'));
+        sec.classList.remove('collapsed');
+        // Update active state
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        link.classList.add('active');
+        // Smooth scroll
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── Open section from hash (after save redirect) ──
+  const hash = location.hash.slice(1);
+  if (hash) {
+    const sec = document.getElementById(hash);
+    if (sec && sec.classList.contains('section')) {
+      sec.classList.remove('collapsed');
+      const navLink = document.querySelector('.nav-link[href="#' + hash + '"]');
+      if (navLink) navLink.classList.add('active');
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  }
+
   // Scroll-Position nach Speichern wiederherstellen
-  if (location.search.includes('saved=1')) {
+  if (location.search.includes('saved=1') && !hash) {
     const savedY = sessionStorage.getItem('adminScrollY');
     if (savedY) {
       setTimeout(() => { window.scrollTo(0, parseInt(savedY)); }, 80);

@@ -436,7 +436,7 @@
       }
     }
 
-    // Event cards — show all upcoming events
+    // Event cards — first prominent, rest compact + expandable
     var ec = document.getElementById('event-container');
     if (ec && events.length) {
       var upcoming = events.filter(function (e) { return e.status === 'upcoming'; });
@@ -447,35 +447,100 @@
       var heading = document.querySelector('#events h2');
       if (upcoming.length > 1) {
         if (kicker) kicker.textContent = 'Kommende Events';
-        if (heading) heading.innerHTML = 'Unsere nächsten Events<br>warten auf dich.';
+        if (heading) heading.innerHTML = 'Das nächste Event<br>wartet auf dich.';
       }
 
-      ec.innerHTML = upcoming.map(function (ev) {
-        var tags = ev.tags
-          ? ev.tags.split(',').map(function (t) {
-              return '<span class="event-chip">' + t.trim() + '</span>';
-            }).join('')
-          : '';
-        return '<div class="event-card">'
-          + '<div class="event-info">'
-          + '<span class="event-vol">Vol. ' + ev.vol + ' · 2026</span>'
-          + '<div class="event-title">' + ev.title + '</div>'
-          + '<div class="event-meta">'
-          + (ev.date     ? '<div class="event-meta-item"><span>📅</span> ' + ev.date     + '</div>' : '')
-          + (ev.time     ? '<div class="event-meta-item"><span>🕑</span> ' + ev.time     + ' Uhr</div>' : '')
-          + (ev.location ? '<div class="event-meta-item"><span>📍</span> ' + ev.location + '</div>' : '')
+      // Build full card for first event
+      var first = upcoming[0];
+      var firstTags = first.tags
+        ? first.tags.split(',').map(function (t) { return '<span class="event-chip">' + t.trim() + '</span>'; }).join('')
+        : '';
+
+      // Flyer thumbnail in poster area (if available)
+      var flyerUrl = s['image_flyer'] || '';
+      var posterHtml = flyerUrl
+        ? '<div class="event-poster flyer-thumb" onclick="document.getElementById(\'flyer-modal\').classList.add(\'active\')" style="cursor:pointer;padding:0;overflow:hidden;border:0">'
+          + '<img src="' + flyerUrl + '" alt="Event Flyer" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)">'
           + '</div>'
-          + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">' + tags + '</div>'
-          + (ev.description ? '<p style="color:rgba(255,255,255,0.8);max-width:480px;margin-bottom:32px;">' + ev.description + '</p>' : '')
-          + '<a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener" class="btn btn-white">Auf Instagram folgen →</a>'
-          + '</div>'
-          + '<div class="event-poster">'
+        : '<div class="event-poster">'
           + '<div class="ep-label">Mini-Kosmos Stuttgart</div>'
-          + '<div class="ep-title">' + ev.title + '</div>'
-          + '<div class="ep-date">' + (ev.date || '') + (ev.time ? '<br>' + ev.time + ' Uhr' : '') + (ev.location ? '<br>' + ev.location : '') + '<br>Eintritt frei</div>'
-          + '</div>'
+          + '<div class="ep-title">' + first.title + '</div>'
+          + '<div class="ep-date">' + (first.date || '') + (first.time ? '<br>' + first.time + ' Uhr' : '') + (first.location ? '<br>' + first.location : '') + '<br>Eintritt frei</div>'
           + '</div>';
-      }).join('');
+
+      var html = '<div class="event-card">'
+        + '<div class="event-info">'
+        + '<span class="event-vol">Vol. ' + first.vol + ' · 2026</span>'
+        + '<div class="event-title">' + first.title + '</div>'
+        + '<div class="event-meta">'
+        + (first.date     ? '<div class="event-meta-item"><span>📅</span> ' + first.date     + '</div>' : '')
+        + (first.time     ? '<div class="event-meta-item"><span>🕑</span> ' + first.time     + ' Uhr</div>' : '')
+        + (first.location ? '<div class="event-meta-item"><span>📍</span> ' + first.location + '</div>' : '')
+        + '</div>'
+        + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">' + firstTags + '</div>'
+        + (first.description ? '<p style="color:rgba(255,255,255,0.8);max-width:480px;margin-bottom:32px;">' + first.description + '</p>' : '')
+        + '<a href="https://www.instagram.com/minikosmos.stuttgart/" target="_blank" rel="noopener" class="btn btn-white">Auf Instagram folgen →</a>'
+        + '</div>'
+        + posterHtml
+        + '</div>';
+
+      // Compact cards for remaining events (expandable)
+      if (upcoming.length > 1) {
+        html += '<div class="more-events-toggle" onclick="this.nextElementSibling.classList.toggle(\'expanded\');this.querySelector(\'span\').textContent=this.nextElementSibling.classList.contains(\'expanded\')?\'Weniger anzeigen ▴\':\'' + (upcoming.length - 1) + ' weitere Events ▾\'">'
+          + '<span>' + (upcoming.length - 1) + ' weitere Events ▾</span>'
+          + '</div>';
+        html += '<div class="more-events">';
+        for (var i = 1; i < upcoming.length; i++) {
+          var ev = upcoming[i];
+          var evTags = ev.tags
+            ? ev.tags.split(',').map(function (t) { return '<span class="event-chip">' + t.trim() + '</span>'; }).join('')
+            : '';
+          html += '<div class="event-compact">'
+            + '<div class="event-compact-header" onclick="this.parentElement.classList.toggle(\'open\')">'
+            + '<div class="event-compact-info">'
+            + '<strong>' + ev.title + '</strong>'
+            + '<span class="event-compact-meta">📅 ' + (ev.date || '') + (ev.location ? ' · 📍 ' + ev.location : '') + '</span>'
+            + '</div>'
+            + '<span class="event-compact-arrow">▾</span>'
+            + '</div>'
+            + '<div class="event-compact-body">'
+            + '<div class="event-meta" style="margin-top:16px">'
+            + (ev.date     ? '<div class="event-meta-item"><span>📅</span> ' + ev.date     + '</div>' : '')
+            + (ev.time     ? '<div class="event-meta-item"><span>🕑</span> ' + ev.time     + ' Uhr</div>' : '')
+            + (ev.location ? '<div class="event-meta-item"><span>📍</span> ' + ev.location + '</div>' : '')
+            + '</div>'
+            + (evTags ? '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">' + evTags + '</div>' : '')
+            + (ev.description ? '<p style="color:rgba(255,255,255,0.8);margin-top:12px">' + ev.description + '</p>' : '')
+            + '</div>'
+            + '</div>';
+        }
+        html += '</div>';
+      }
+
+      ec.innerHTML = html;
+    }
+
+    // Flyer modal — inject if flyer image exists
+    var flyerImg = s['image_flyer'];
+    if (flyerImg) {
+      var pageUrl = encodeURIComponent(window.location.href);
+      var shareText = encodeURIComponent('Schau dir das nächste Mini-Kosmos Event an!');
+      var modal = document.createElement('div');
+      modal.id = 'flyer-modal';
+      modal.className = 'flyer-modal';
+      modal.innerHTML = '<div class="flyer-modal-backdrop" onclick="this.parentElement.classList.remove(\'active\')"></div>'
+        + '<div class="flyer-modal-content">'
+        + '<button class="flyer-modal-close" onclick="this.closest(\'.flyer-modal\').classList.remove(\'active\')" aria-label="Schließen">&times;</button>'
+        + '<img src="' + flyerImg + '" alt="Event Flyer">'
+        + '<div class="flyer-share">'
+        + '<span style="font-weight:700;font-size:.85rem">Teilen:</span>'
+        + '<a href="https://wa.me/?text=' + shareText + '%20' + pageUrl + '" target="_blank" rel="noopener" title="WhatsApp">💬</a>'
+        + '<a href="https://t.me/share/url?url=' + pageUrl + '&text=' + shareText + '" target="_blank" rel="noopener" title="Telegram">✈️</a>'
+        + '<a href="mailto:?subject=Mini-Kosmos%20Event&body=' + shareText + '%20' + pageUrl + '" title="E-Mail">📧</a>'
+        + '<button onclick="navigator.clipboard.writeText(window.location.href);this.textContent=\'✓ Kopiert\';setTimeout(function(){this.textContent=\'🔗\';}.bind(this),2000)" title="Link kopieren">🔗</button>'
+        + '</div>'
+        + '</div>';
+      document.body.appendChild(modal);
     }
   }).catch(function () { /* fail silently — static HTML stays as fallback */ });
 }());
