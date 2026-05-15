@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#8CCDBD"/>
+      <stop offset="28%"  stop-color="#ADC985"/>
+      <stop offset="52%"  stop-color="#E3B95B"/>
+      <stop offset="68%"  stop-color="#E8862A"/>
+      <stop offset="82%"  stop-color="#D4544A"/>
+      <stop offset="100%" stop-color="#7C517F"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="url(#g)"/>
+  <text x="16" y="21" text-anchor="middle"
+        font-family="system-ui,-apple-system,sans-serif"
+        font-weight="900" font-size="13"
+        fill="rgba(255,255,255,0.95)"
+        letter-spacing="-0.5">MK</text>
+</svg>
