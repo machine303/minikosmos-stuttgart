@@ -6,14 +6,14 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++
 
 # Deps first (cache layer)
-COPY package.json ./
+COPY cms/package.json ./
 RUN npm install --production
 
 # Strip build tools to keep image lean
 RUN apk del python3 make g++
 
 # App code + website files
-COPY index.js ./
+COPY cms/index.js ./
 COPY website/ ./website/
 
 # Persistent data volume
