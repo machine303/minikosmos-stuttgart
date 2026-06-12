@@ -1049,7 +1049,7 @@ ${saved ? '<div class="toast">✓ Gespeichert</div>' : ''}
 </script>
 <script src="https://bugs.marrazzo.digital/widget.js"
   data-project="minikosmos-admin"
-  data-api-key="64890c1d7d2cacee70223ccf91d6513254c82ff3ec1043ff"
+  data-endpoint="/api/bugs-admin"
   data-position="bottom-right"
   data-color="#f59e0b"
   data-types="bug,ux,wunsch"
